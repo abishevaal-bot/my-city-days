@@ -24,9 +24,9 @@ jobs:
           channel: stable
 
       - name: Get packages
-        working-directory: project
+        working-directory: project/my_city_days_fixed
         run: flutter pub get
 
       - name: Build web
-        working-directory: project
+        working-directory: project/my_city_days_fixed
         run: flutter build web
