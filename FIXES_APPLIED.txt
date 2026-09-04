@@ -1,0 +1,14 @@
+My City Days - fixes applied by ChatGPT
+
+1. Fixed the blank Welcome screen caused by an unbounded Column containing Spacer widgets.
+2. Removed Firebase initialization from app startup because this MVP does not need Firebase and a Firebase startup failure can block the whole app.
+3. Removed Firestore StreamBuilders from MyTrip. MyTrip now directly displays the itinerary passed in itineraryId.
+4. Rebuilt Trip Setup selectors so City, Days, Interests and Language are actually clickable.
+5. Fixed interests default state from one malformed JSON-looking string to two real values: Food, Culture.
+6. GenerateTrip now sends all selected interests (comma-separated), not only the first one.
+7. Removed stray angle brackets around the interests value in the API JSON body.
+8. Added visible error messages for failed/empty API responses.
+9. Kept the existing API endpoint exactly as exported by FlutterFlow:
+   https://pnkkddcqqsgfsjrtoabv.supabase.co/functions/v1/generate-trip
+
+IMPORTANT: This export does not contain a Cloudflare travel worker URL. If the intended backend is Cloudflare instead of Supabase, replace the apiUrl in lib/backend/api_requests/api_calls.dart with the exact Cloudflare Worker URL.
