@@ -1,0 +1,80 @@
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import 'dart:ui';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'tip_item_model.dart';
+export 'tip_item_model.dart';
+
+class TipItemWidget extends StatefulWidget {
+  const TipItemWidget({
+    super.key,
+    String? text,
+  }) : this.text = text ?? '';
+
+  final String text;
+
+  @override
+  State<TipItemWidget> createState() => _TipItemWidgetState();
+}
+
+class _TipItemWidgetState extends State<TipItemWidget> {
+  late TipItemModel _model;
+
+  @override
+  void setState(VoidCallback callback) {
+    super.setState(callback);
+    _model.onUpdate();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _model = createModel(context, () => TipItemModel());
+  }
+
+  @override
+  void dispose() {
+    _model.maybeDispose();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(
+          Icons.info_outlined,
+          color: FlutterFlowTheme.of(context).primary,
+          size: 18.0,
+        ),
+        Expanded(
+          flex: 1,
+          child: Text(
+            widget!.text,
+            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                  font: GoogleFonts.inter(
+                    fontWeight:
+                        FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                    fontStyle:
+                        FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                  ),
+                  color: FlutterFlowTheme.of(context).secondaryText,
+                  letterSpacing: 0.0,
+                  fontWeight:
+                      FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                  lineHeight: 1.5,
+                ),
+          ),
+        ),
+      ].divide(SizedBox(width: 16.0)),
+    );
+  }
+}
