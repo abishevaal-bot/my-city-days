@@ -25,8 +25,8 @@ jobs:
 
       - name: Unzip project
         run: |
-          unzip -o my_city_days_v6.zip -d project
-
+          unzip -o my_city_days_v6_maps_fixed.zip -d project
+          
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
