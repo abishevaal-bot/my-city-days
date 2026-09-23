@@ -21,10 +21,45 @@ workflows:
           cd project/my_city_days_fixed
           flutter pub get
 
-      - name: Install CocoaPods
+      - name: Set iOS deployment target
         script: |
           cd project/my_city_days_fixed
-          find . -name "Podfile" -execdir pod install \;
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          podfile = Path("ios/Podfile")
+          text = podfile.read_text()
+
+          if re.search(r'^\s*#?\s*platform\s+:ios', text, flags=re.M):
+              text = re.sub(
+                  r'^\s*#?\s*platform\s+:ios.*$',
+                  "platform :ios, '15.0'",
+                  text,
+                  count=1,
+                  flags=re.M
+              )
+          else:
+              text = "platform :ios, '15.0'\n" + text
+
+          podfile.write_text(text)
+
+          pbx = Path("ios/Runner.xcodeproj/project.pbxproj")
+          text = pbx.read_text()
+          text = re.sub(
+              r'IPHONEOS_DEPLOYMENT_TARGET = [^;]+;',
+              'IPHONEOS_DEPLOYMENT_TARGET = 15.0;',
+              text
+          )
+          pbx.write_text(text)
+          PY
+
+          flutter build ios --config-only
+
+      - name: Install CocoaPods
+        script: |
+          cd project/my_city_days_fixed/ios
+          pod install
 
       - name: Build iOS
         script: |
