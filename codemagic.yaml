@@ -16,18 +16,15 @@ workflows:
           mkdir -p project
           unzip -o my_city_days_mvp_1_0.zip -d project
 
-      - name: Get Flutter packages
-        script: |
-          cd project/my_city_days_fixed
-          flutter pub get
-
       - name: Configure iOS
         script: |
           cd project/my_city_days_fixed
+
           python3 - <<'PY'
           from pathlib import Path
           import re
 
+          # Set minimum iOS version
           podfile = Path("ios/Podfile")
           text = podfile.read_text()
 
@@ -44,6 +41,7 @@ workflows:
 
           podfile.write_text(text)
 
+          # Set deployment target and correct Bundle ID
           pbx = Path("ios/Runner.xcodeproj/project.pbxproj")
           text = pbx.read_text()
 
@@ -53,13 +51,22 @@ workflows:
               text
           )
 
-          text = text.replace(
-              'com.mycitydays.app',
-              'com.abisheva.mycitydays'
+          text = re.sub(
+              r'PRODUCT_BUNDLE_IDENTIFIER = [^;]+;',
+              'PRODUCT_BUNDLE_IDENTIFIER = com.abisheva.mycitydays;',
+              text
           )
 
           pbx.write_text(text)
+
+          print("iOS deployment target: 15.0")
+          print("Bundle ID: com.abisheva.mycitydays")
           PY
+
+      - name: Get Flutter packages
+        script: |
+          cd project/my_city_days_fixed
+          flutter pub get
 
       - name: Install CocoaPods
         script: |
