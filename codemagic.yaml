@@ -16,6 +16,70 @@ workflows:
           mkdir -p project
           unzip -o my_city_days_mvp_1_0.zip -d project
 
+      - name: Disable Swift Package Manager
+        script: |
+          flutter config --no-enable-swift-package-manager
+
+          cd project/my_city_days_fixed
+
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          pubspec = Path("pubspec.yaml")
+          text = pubspec.read_text()
+
+          if re.search(r'^\s+enable-swift-package-manager\s*:', text, flags=re.M):
+              text = re.sub(
+                  r'^(\s+)enable-swift-package-manager\s*:\s*.*$',
+                  r'\1enable-swift-package-manager: false',
+                  text,
+                  flags=re.M
+              )
+          else:
+              lines = text.splitlines()
+
+              flutter_index = None
+              for i, line in enumerate(lines):
+                  if line.strip() == "flutter:" and not line.startswith(" "):
+                      flutter_index = i
+                      break
+
+              if flutter_index is None:
+                  raise Exception("flutter: section not found in pubspec.yaml")
+
+              section_end = len(lines)
+              for i in range(flutter_index + 1, len(lines)):
+                  line = lines[i]
+                  if line and not line.startswith((" ", "\t", "#")):
+                      section_end = i
+                      break
+
+              config_index = None
+              for i in range(flutter_index + 1, section_end):
+                  if lines[i].strip() == "config:":
+                      config_index = i
+                      break
+
+              if config_index is not None:
+                  lines.insert(
+                      config_index + 1,
+                      "    enable-swift-package-manager: false"
+                  )
+              else:
+                  lines.insert(flutter_index + 1, "  config:")
+                  lines.insert(
+                      flutter_index + 2,
+                      "    enable-swift-package-manager: false"
+                  )
+
+              text = "\n".join(lines) + "\n"
+
+          pubspec.write_text(text)
+
+          print("Swift Package Manager disabled in pubspec.yaml")
+          PY
+
       - name: Configure iOS
         script: |
           cd project/my_city_days_fixed
@@ -24,7 +88,6 @@ workflows:
           from pathlib import Path
           import re
 
-          # Set minimum iOS version
           podfile = Path("ios/Podfile")
           text = podfile.read_text()
 
@@ -41,7 +104,6 @@ workflows:
 
           podfile.write_text(text)
 
-          # Set deployment target and correct Bundle ID
           pbx = Path("ios/Runner.xcodeproj/project.pbxproj")
           text = pbx.read_text()
 
@@ -66,12 +128,14 @@ workflows:
       - name: Get Flutter packages
         script: |
           cd project/my_city_days_fixed
+          flutter clean
           flutter pub get
 
       - name: Install CocoaPods
         script: |
           cd project/my_city_days_fixed/ios
-          pod install
+          rm -rf Pods Podfile.lock
+          pod install --repo-update
 
       - name: Build iOS without signing
         script: |
