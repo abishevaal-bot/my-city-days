@@ -1,13 +1,22 @@
 workflows:
-  ios-unsigned-test:
-    name: My City Days iOS Test
+  ios-testflight:
+    name: My City Days TestFlight
     instance_type: mac_mini_m2
     max_build_duration: 120
+
+    integrations:
+      app_store_connect: "My City Days"
 
     environment:
       flutter: stable
       xcode: latest
       cocoapods: default
+
+      ios_signing:
+        provisioning_profiles:
+          - MyCityDaysAppStore
+        certificates:
+          - MyCityDaysDistribution
 
     scripts:
       - name: Unpack My City Days MVP
@@ -137,11 +146,23 @@ workflows:
           rm -rf Pods Podfile.lock
           pod install --repo-update
 
-      - name: Build iOS without signing
+      - name: Set up code signing
         script: |
           cd project/my_city_days_fixed
-          flutter build ios --debug --no-codesign
+          xcode-project use-profiles
+
+      - name: Build signed IPA
+        script: |
+          cd project/my_city_days_fixed
+          flutter build ipa --release \
+            --build-name=1.0.0 \
+            --build-number=1 \
+            --export-options-plist=/Users/builder/export_options.plist
 
     artifacts:
-      - project/my_city_days_fixed/build/ios/iphoneos/**/*.app
+      - project/my_city_days_fixed/build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
+
+    publishing:
+      app_store_connect:
+        auth: integration
