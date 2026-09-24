@@ -23,7 +23,7 @@ workflows:
         script: |
           rm -rf project
           mkdir -p project
-          unzip -o my_city_days_build_2_tips.zip -d project
+          unzip -o my_city_days_build_4_iap_paywall.zip -d project
 
       - name: Disable Swift Package Manager
         script: |
@@ -156,7 +156,7 @@ workflows:
           cd project/my_city_days_fixed
           flutter build ipa --release \
             --build-name=1.0.0 \
-            --build-number=2 \
+            --build-number=3 \
             --export-options-plist=/Users/builder/export_options.plist
 
     artifacts:
