@@ -40,6 +40,147 @@ jobs:
         working-directory: project/my_city_days_fixed
         run: flutter build web --base-href "/my-city-days/"
 
+      - name: Add Support and Privacy pages
+        run: |
+          mkdir -p project/my_city_days_fixed/build/web/support
+          mkdir -p project/my_city_days_fixed/build/web/privacy
+
+          cat > project/my_city_days_fixed/build/web/support/index.html <<'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>My City Days - Support</title>
+          </head>
+          <body style="font-family: Arial, sans-serif; max-width: 760px; margin: 60px auto; padding: 0 24px; line-height: 1.6;">
+            <h1>My City Days Support</h1>
+
+            <p>Welcome to My City Days Support.</p>
+
+            <p>
+              My City Days helps you create personalized city itineraries
+              based on your destination, trip length, and interests.
+            </p>
+
+            <h2>Need help?</h2>
+
+            <p>
+              If you have a question, experience a problem, or need assistance
+              with My City Days, please contact us at:
+            </p>
+
+            <p><strong>support.mycitydays@gmail.com</strong></p>
+
+            <h2>Common Questions</h2>
+
+            <h3>How do I create a trip?</h3>
+            <p>
+              Choose your destination, number of days, interests, and other
+              available preferences. My City Days will generate a personalized
+              itinerary for your trip.
+            </p>
+
+            <h3>Why isn't my itinerary generating?</h3>
+            <p>
+              Check your internet connection and try again. If the problem
+              continues, contact support using the email above.
+            </p>
+
+            <h3>Purchases</h3>
+            <p>
+              Purchases made through the iOS app are processed through Apple's
+              App Store payment system.
+            </p>
+
+            <p>
+              <a href="../privacy/">Privacy Policy</a>
+            </p>
+
+            <p>© 2026 My City Days. All rights reserved.</p>
+          </body>
+          </html>
+          EOF
+
+          cat > project/my_city_days_fixed/build/web/privacy/index.html <<'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>My City Days - Privacy Policy</title>
+          </head>
+          <body style="font-family: Arial, sans-serif; max-width: 760px; margin: 60px auto; padding: 0 24px; line-height: 1.6;">
+            <h1>Privacy Policy</h1>
+
+            <p><strong>Last updated: September 24, 2026</strong></p>
+
+            <p>
+              This Privacy Policy explains how My City Days handles information
+              when you use the application.
+            </p>
+
+            <h2>Information You Provide</h2>
+            <p>
+              My City Days may process information you provide when creating
+              a trip, such as destination, trip duration, interests, language,
+              and travel preferences, in order to generate your itinerary.
+            </p>
+
+            <h2>AI-Generated Content</h2>
+            <p>
+              My City Days uses artificial intelligence services to generate
+              personalized travel suggestions and itineraries. Information
+              submitted for itinerary generation may be processed by service
+              providers used to provide this functionality.
+            </p>
+
+            <h2>Purchases</h2>
+            <p>
+              In-app purchases are processed by Apple through the App Store.
+              My City Days does not directly collect or store your payment card
+              information.
+            </p>
+
+            <h2>Third-Party Services</h2>
+            <p>
+              My City Days may rely on third-party service providers to operate
+              certain features of the application. These providers may process
+              information as necessary to provide their services.
+            </p>
+
+            <h2>Data Security</h2>
+            <p>
+              Reasonable measures are used to protect information processed in
+              connection with My City Days.
+            </p>
+
+            <h2>Children's Privacy</h2>
+            <p>
+              My City Days is not specifically directed to children under 13.
+            </p>
+
+            <h2>Changes to This Policy</h2>
+            <p>
+              This Privacy Policy may be updated from time to time. Any changes
+              will be posted on this page with an updated revision date.
+            </p>
+
+            <h2>Contact</h2>
+            <p>
+              For privacy questions or support, contact:
+              <strong>support.mycitydays@gmail.com</strong>
+            </p>
+
+            <p>
+              <a href="../support/">Support</a>
+            </p>
+
+            <p>© 2026 My City Days. All rights reserved.</p>
+          </body>
+          </html>
+          EOF
+          
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
