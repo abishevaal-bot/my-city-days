@@ -265,6 +265,28 @@ workflows:
           print(settings_file.read_text())
           PY
 
+      - name: Configure release signing
+        script: |
+          cd project/my_city_days_fixed
+
+          python3 - <<'PY'
+          from pathlib import Path
+
+          gradle_file = Path("android/app/build.gradle")
+          text = gradle_file.read_text()
+
+          old = "signingConfig signingConfigs.debug"
+          new = "signingConfig signingConfigs.release"
+
+          if old not in text:
+              raise Exception("Debug signing configuration not found")
+
+          text = text.replace(old, new)
+          gradle_file.write_text(text)
+
+          print("Android release signing changed from DEBUG to RELEASE")
+          PY
+
       - name: Get Flutter packages
         script: |
           cd project/my_city_days_fixed
