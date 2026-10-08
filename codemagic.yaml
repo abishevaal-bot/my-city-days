@@ -193,3 +193,48 @@ workflows:
 
     artifacts:
       - mycitydays-upload-key.jks
+
+  android-google-play:
+    name: My City Days Android
+    instance_type: mac_mini_m2
+    max_build_duration: 120
+
+    environment:
+      flutter: stable
+
+      android_signing:
+        - mycitydays_keystore
+
+    scripts:
+      - name: Unpack My City Days MVP
+        script: |
+          rm -rf project
+          mkdir -p project
+          unzip -o My_City_Days_Build_4_Apple_Fixes_GitHub.zip -d project
+
+      - name: Get Flutter packages
+        script: |
+          cd project/my_city_days_fixed
+          flutter clean
+          flutter pub get
+
+      - name: Configure Android signing
+        script: |
+          cd project/my_city_days_fixed
+
+          cat > android/key.properties <<EOF
+          storePassword=$CM_KEYSTORE_PASSWORD
+          keyPassword=$CM_KEY_PASSWORD
+          keyAlias=$CM_KEY_ALIAS
+          storeFile=$CM_KEYSTORE_PATH
+          EOF
+
+      - name: Build signed Android App Bundle
+        script: |
+          cd project/my_city_days_fixed
+          flutter build appbundle --release \
+            --build-name=1.0.0 \
+            --build-number=1
+
+    artifacts:
+      - project/my_city_days_fixed/build/app/outputs/bundle/release/*.aab
