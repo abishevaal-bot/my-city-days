@@ -230,7 +230,19 @@ workflows:
           )
 
           gradle_file.write_text(text)
+          settings_file = Path("android/settings.gradle")
+          settings_text = settings_file.read_text()
 
+          settings_text = re.sub(
+          r'id\s+["\']com\.android\.application["\']\s+version\s+["\'][^"\']+["\']',
+          'id "com.android.application" version "8.11.1"',
+          settings_text
+          )
+
+          settings_file.write_text(settings_text)
+
+          print("Updated Android Gradle Plugin:")
+          print(settings_file.read_text())
           print("Updated Gradle wrapper:")
           print(gradle_file.read_text())
           PY
