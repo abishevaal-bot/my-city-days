@@ -166,3 +166,31 @@ workflows:
     publishing:
       app_store_connect:
         auth: integration
+
+        
+    generate-android-keystore:
+    name: Generate Android Keystore
+    instance_type: mac_mini_m2
+    max_build_duration: 20
+
+    environment:
+      groups:
+        - android_keystore
+      vars:
+        KEY_ALIAS: mycitydays
+
+    scripts:
+      - name: Generate keystore
+        script: |
+          keytool -genkeypair -v \
+            -keystore mycitydays-upload-key.jks \
+            -storepass "$ANDROID_KEYSTORE_PASSWORD" \
+            -keypass "$ANDROID_KEYSTORE_PASSWORD" \
+            -alias "$KEY_ALIAS" \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -dname "CN=My City Days, OU=Development, O=My City Days, L=San Diego, ST=California, C=US"
+
+    artifacts:
+      - mycitydays-upload-key.jks
