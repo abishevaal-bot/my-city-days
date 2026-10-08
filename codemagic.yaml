@@ -212,7 +212,7 @@ workflows:
           mkdir -p project
           unzip -o My_City_Days_Build_4_Apple_Fixes_GitHub.zip -d project
 
-      - name: Update Android Gradle to 8.14.0
+      - name: Update Android Gradle to 8.14.3
         script: |
           cd project/my_city_days_fixed
 
@@ -225,7 +225,7 @@ workflows:
 
           text = re.sub(
               r'gradle-[0-9.]+-(all|bin)\.zip',
-              'gradle-8.14.0-all.zip',
+              'gradle-8.14.3-all.zip',
               text
           )
 
