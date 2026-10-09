@@ -25,7 +25,7 @@ jobs:
 
       - name: Unzip project
         run: |
-          unzip -o My_City_Days_Build_4_Apple_Fixes_GitHub.zip -d project
+          unzip -o My_City_Days_Android_Internal_Test_Build_2.zip -d project
           
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
