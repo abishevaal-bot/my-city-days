@@ -23,7 +23,7 @@ workflows:
         script: |
           rm -rf project
           mkdir -p project
-          unzip -o My_City_Days_Android_Internal_Test_Build_2.zip -d project
+          unzip -o My_City_Days_Build_4_Apple_Fixes_GitHub.zip -d project
 
       - name: Disable Swift Package Manager
         script: |
@@ -210,7 +210,7 @@ workflows:
         script: |
           rm -rf project
           mkdir -p project
-          unzip -o My_City_Days_Build_4_Apple_Fixes_GitHub.zip -d project
+          unzip -o My_City_Days_Android_Internal_Test_Build_2.zip -d project
 
       - name: Update Android build dependencies
         script: |
