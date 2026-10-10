@@ -210,7 +210,7 @@ workflows:
         script: |
           rm -rf project
           mkdir -p project
-          unzip -o My_City_Days_Android_Internal_Test_Build_2.zip -d project
+          unzip -o My_City_Days_Android_Release_Working_Draft.zip -d project
 
       - name: Update Android build dependencies
         script: |
