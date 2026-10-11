@@ -210,7 +210,7 @@ workflows:
         script: |
           rm -rf project
           mkdir -p project
-          unzip -o My_City_Days_Android_History_Maps_Draft.zip -d project
+          unzip -o My_City_Days_Android_History_Maps_Import_Fix.zip -d project
 
       - name: Update Android build dependencies
         script: |
