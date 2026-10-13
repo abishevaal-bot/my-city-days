@@ -210,7 +210,7 @@ workflows:
         script: |
           rm -rf project
           mkdir -p project
-          unzip -o My_City_Days_Build6_DarkMode_City_Preview_Fix.zip -d project
+          unzip -o My_City_Days_Build7_Mai_Native_Language_Editorial_Fix.zip -d project
 
       - name: Update Android build dependencies
         script: |
