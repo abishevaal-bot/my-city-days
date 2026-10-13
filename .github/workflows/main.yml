@@ -25,7 +25,7 @@ jobs:
 
       - name: Unzip project
         run: |
-          unzip -o My_City_Days_Build6_Hiking_Nature_Local_Gems_Final_Web_Test.zip -d project
+          unzip -o My_City_Days_Build6_DarkMode_City_Preview_Fix.zip -d project
           
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
