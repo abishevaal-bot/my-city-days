@@ -23,7 +23,7 @@ workflows:
         script: |
           rm -rf project
           mkdir -p project
-          unzip -o My_City_Days_iOS_Build_6_Candidate.zip -d project
+          unzip -o My_City_Days_iOS_Build_6_Final.zip -d project
 
       - name: Disable Swift Package Manager
         script: |
