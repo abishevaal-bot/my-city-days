@@ -210,7 +210,7 @@ workflows:
         script: |
           rm -rf project
           mkdir -p project
-          unzip -o My_City_Days_Build7_Mai_Native_Language_Editorial_Fix.zip -d project
+          unzip -o My_City_Days_Build8_Dark_Mode_Contrast_Fix.zip -d project
 
       - name: Update Android build dependencies
         script: |
@@ -309,7 +309,7 @@ workflows:
           cd project/my_city_days_fixed
           flutter build appbundle --release \
             --build-name=1.0.0 \
-            --build-number=7
+            --build-number=8
 
     artifacts:
       - project/my_city_days_fixed/build/app/outputs/bundle/release/*.aab
