@@ -210,7 +210,7 @@ workflows:
         script: |
           rm -rf project
           mkdir -p project
-          unzip -o My_City_Days_Build8_Dark_Mode_Contrast_Fix.zip -d project
+          unzip -o MCD_ANDROID_2_49_LIGHT_MODE_FINAL.zip -d project
 
       - name: Update Android build dependencies
         script: |
