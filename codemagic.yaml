@@ -308,8 +308,8 @@ workflows:
         script: |
           cd project/my_city_days_fixed
           flutter build appbundle --release \
-            --build-name=1.0.0 \
-            --build-number=8
+            --build-name=1.0.1 \
+            --build-number=12
 
     artifacts:
       - project/my_city_days_fixed/build/app/outputs/bundle/release/*.aab
